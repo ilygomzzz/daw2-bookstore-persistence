@@ -3,7 +3,8 @@ package es.javsergom.persistence.dao.jpa.entity;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "authors")
@@ -21,7 +22,7 @@ public class AuthorJpaEntity implements Serializable {
     private Integer birthYear;
     private Integer deathYear;
     private String slug;
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", fetch =  FetchType.LAZY)
     private List<BookAuthorJpaEntity> bookAuthors;
 
     public AuthorJpaEntity() {}

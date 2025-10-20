@@ -1,10 +1,10 @@
 package es.javsergom.persistence.repository;
 
-import es.javierserrano.domain.mapper.AuthorMapper;
 import es.javierserrano.domain.repository.AuthorRepository;
 import es.javierserrano.domain.repository.entity.AuthorEntity;
 import es.javsergom.persistence.dao.jpa.AuthorJpaDao;
 import es.javsergom.persistence.dao.jpa.entity.AuthorJpaEntity;
+import es.javsergom.persistence.repository.mapper.AuthorMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,30 +18,30 @@ public class AuthorRepositoryImpl implements AuthorRepository {
     }
 
     @Override
-    public List<AuthorEntity> getAll() {
-        return authorJpaDao.getAll().stream()
-                .map(AuthorEntity.INSTANCE::fromAuthorJpaEntityToAuthorEntity)
+    public List<AuthorEntity> findAll(int page, int size) {
+        return authorJpaDao.findAll(page, size).stream()
+                .map(AuthorMapper.INSTANCE::fromAuthorJpaEntityToAuthorEntity)
                 .toList();
     }
 
     @Override
     public Optional<AuthorEntity> findBySlug(String slug) {
-        return authorJpaDao.findBySlug(slug).map(AuthorEntity.INSTANCE::fromAuthorJpaEntityToAuthorEntity);
+        return authorJpaDao.findBySlug(slug).map(AuthorMapper.INSTANCE::fromAuthorJpaEntityToAuthorEntity);
     }
 
     @Override
     public AuthorEntity save(AuthorEntity authorEntity) {
-        AuthorJpaEntity authorJpaEntity = AuthorEntity.INSTANCE.fromAuthorEntityToAuthorJpaEntity(authorEntity);
+        AuthorJpaEntity authorJpaEntity = AuthorMapper.INSTANCE.fromAuthorEntityToAuthorJpaEntity(authorEntity);
         if(authorEntity.id() == null) {
             return AuthorMapper.INSTANCE.fromAuthorJpaEntityToAuthorEntity(authorJpaDao.insert(authorJpaEntity));
         }
 
-        return AuthorMapper.ISTANCE.fromAuthorJpaEntityToAuthorEntity(authorJpaDao.update(authorJpaEntity));
+        return AuthorMapper.INSTANCE.fromAuthorJpaEntityToAuthorEntity(authorJpaDao.update(authorJpaEntity));
     }
 
     @Override
     public Optional<AuthorEntity> findById(Long id) {
-        return authorJpaDao.findById(id).map(AuthorEntity.INSTANCE::fromAuthorJpaEntityToAuthorEntity);
+        return authorJpaDao.findById(id).map(AuthorMapper.INSTANCE::fromAuthorJpaEntityToAuthorEntity);
     }
 
     @Override
