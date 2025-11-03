@@ -14,6 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jakarta.persistence-api.version>3.1.0</jakarta.persistence-api.version>
         <org.spring.boot.version>3.5.6</org.spring.boot.version>
+        <org.instancio.version>5.5.1</org.instancio.version>
     </properties>
     <dependencies>
         <dependency>
@@ -36,6 +37,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <version>${org.spring.boot.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.instancio</groupId>
+            <artifactId>instancio-junit</artifactId>
+            <version>${org.instancio.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
