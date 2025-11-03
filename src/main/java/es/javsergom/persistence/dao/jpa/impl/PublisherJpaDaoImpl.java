@@ -1,5 +1,6 @@
 package es.javsergom.persistence.dao.jpa.impl;
 
+import es.javierserrano.domain.exception.ResourceNotFoundException;
 import es.javsergom.persistence.dao.jpa.PublisherJpaDao;
 import es.javsergom.persistence.dao.jpa.entity.PublisherJpaEntity;
 import jakarta.persistence.EntityManager;
@@ -60,26 +61,34 @@ public class PublisherJpaDaoImpl implements PublisherJpaDao {
 
     @Override
     public Optional<PublisherJpaEntity> findById(Long id) {
-        return Optional.empty();
+        return Optional.ofNullable(entityManager.find(PublisherJpaEntity.class, id));
     }
 
     @Override
     public PublisherJpaEntity insert(PublisherJpaEntity entity) {
-        return null;
+        entityManager.persist(entity);
+        return entity;
     }
 
     @Override
     public PublisherJpaEntity update(PublisherJpaEntity entity) {
-        return null;
+        PublisherJpaEntity managedEntity = entityManager.find(PublisherJpaEntity.class, entity.getId());
+        if (managedEntity == null) {
+            throw new ResourceNotFoundException("Publisher with id " + entity.getId() + " not found");
+        }
+
+        entityManager.flush();
+        return entityManager.merge(entity);
     }
 
     @Override
     public void deleteById(Long id) {
-
+        entityManager.remove(entityManager.find(PublisherJpaEntity.class, id));
     }
 
     @Override
     public long count() {
-        return 0;
+        return entityManager.createQuery("SELECT COUNT(a) FROM AuthorJpaEntity a", Long.class)
+                .getSingleResult();
     }
 }

@@ -1,5 +1,6 @@
 package es.javsergom.persistence.repository;
 
+import es.javierserrano.domain.model.Page;
 import es.javierserrano.domain.repository.AuthorRepository;
 import es.javierserrano.domain.repository.entity.AuthorEntity;
 import es.javsergom.persistence.dao.jpa.AuthorJpaDao;
@@ -18,10 +19,14 @@ public class AuthorRepositoryImpl implements AuthorRepository {
     }
 
     @Override
-    public List<AuthorEntity> findAll(int page, int size) {
-        return authorJpaDao.findAll(page, size).stream()
+    public Page<AuthorEntity> findAll(int page, int size) {
+        List<AuthorEntity> authorEntities = authorJpaDao.findAll(page, size).stream()
                 .map(AuthorMapper.INSTANCE::fromAuthorJpaEntityToAuthorEntity)
                 .toList();
+
+        long totalElements = authorJpaDao.count();
+
+        return new Page<>(authorEntities, page, size, totalElements);
     }
 
     @Override
