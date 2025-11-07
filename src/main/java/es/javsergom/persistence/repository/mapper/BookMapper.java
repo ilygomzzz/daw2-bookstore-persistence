@@ -18,7 +18,7 @@ public class BookMapper {
                 bookJpaEntity.getBasePrice(),
                 bookJpaEntity.getDiscountPercentage(),
                 bookJpaEntity.getCover(),
-                LocalDate.parse(bookJpaEntity.getPublicationDate()),
+                bookJpaEntity.getPublicationDate(),
                 PublisherMapper.fromPublisherJpaEntityToPublisherEntity(bookJpaEntity.getPublisher()),
                  (bookJpaEntity.getAuthors() != null && !bookJpaEntity.getAuthors().isEmpty())
                         ? bookJpaEntity.getAuthors().stream()
@@ -39,7 +39,7 @@ public class BookMapper {
                 bookEntity.basePrice(),
                 bookEntity.discountPercentage(),
                 bookEntity.cover(),
-                bookEntity.publicationDate().toString(),
+                bookEntity.publicationDate(),
                 PublisherMapper.fromPublisherEntityToPublisherJpaEntity(bookEntity.publisher())
         );
 

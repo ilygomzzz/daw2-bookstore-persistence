@@ -3,6 +3,7 @@ package es.javsergom.persistence.dao.jpa.entity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,10 +26,10 @@ public class BookJpaEntity {
     @Column(name = "base_price")
     private BigDecimal basePrice;
     @Column(name = "discount_percentage")
-    private Double discountPercentage;
+    private BigDecimal discountPercentage;
     private String cover;
     @Column(name = "publication_date")
-    private String publicationDate;
+    private LocalDate publicationDate;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "publisher_id")
     private PublisherJpaEntity publisher;
@@ -37,7 +38,7 @@ public class BookJpaEntity {
 
     public BookJpaEntity() {}
 
-    public  BookJpaEntity(Long id, String isbn, String titleEs, String titleEn, String synopsisEs, String synopsisEn, BigDecimal basePrice, Double discountPercentage, String cover, String publicationDate, PublisherJpaEntity publisher) {
+    public BookJpaEntity(Long id, String isbn, String titleEs, String titleEn, String synopsisEs, String synopsisEn, BigDecimal basePrice, BigDecimal discountPercentage, String cover, LocalDate publicationDate, PublisherJpaEntity publisher) {
         this.id = id;
         this.isbn = isbn;
         this.titleEs = titleEs;
@@ -88,11 +89,11 @@ public class BookJpaEntity {
         this.cover = cover;
     }
 
-    public Double getDiscountPercentage() {
+    public BigDecimal getDiscountPercentage() {
         return discountPercentage;
     }
 
-    public void setDiscountPercentage(Double discountPercentage) {
+    public void setDiscountPercentage(BigDecimal discountPercentage) {
         this.discountPercentage = discountPercentage;
     }
 
@@ -112,11 +113,11 @@ public class BookJpaEntity {
         this.isbn = isbn;
     }
 
-    public String getPublicationDate() {
+    public LocalDate getPublicationDate() {
         return publicationDate;
     }
 
-    public void setPublicationDate(String publicationDate) {
+    public void setPublicationDate(LocalDate publicationDate) {
         this.publicationDate = publicationDate;
     }
 
